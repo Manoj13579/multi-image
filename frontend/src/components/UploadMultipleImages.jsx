@@ -13,18 +13,19 @@ const UploadMultipleImages = () => {
   // Handle file selection
   const handleFileChange = (e) => {
     const newFiles = Array.from(e.target.files); // Get the selected files as an array
+  // if jpg allowed then jpeg allowed too. jpg is a subset of jpeg
+    const allowedTypes = ["image/jpg", "image/jpeg", "image/png"];
   
-    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-  
-    // Validate each file. for loop used. for loop(array method) used to iterate overewFiles array. each file is a file
+    // Validate each file. for in loop used(not for). for loop(array method) used to iterate overewFiles array. each file is a file
     for (const file of newFiles) {
+      //includes is array method
       if (!allowedTypes.includes(file.type)) {
         alert(`Invalid file type: ${file.name}. Only JPEG, JPG, and PNG are allowed.`);
-        return; // Stop processing if any file is invalid
+        return;
       }
       if (file.size > MAX_FILE_SIZE) {
         alert(`File ${file.name} is too large. File size should be less than 1 MB.`);
-        return; // Stop processing if any file exceeds the size limit
+        return;
       }
     }
   
@@ -73,7 +74,7 @@ console.log('formdata', formData);
           type="file"
           multiple
           // only accept images
-          accept="image/*"
+          accept="image"
           onChange={handleFileChange}
           style={styles.fileInput}
         />
